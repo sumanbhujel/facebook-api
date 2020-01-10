@@ -3,21 +3,14 @@ const Post = mongoose.model('Post', {
 
     status: {
         type: String,
-        require:true,
+        required:true,
         trim: true
     },
     image: {
         type: String,
-        require:true,
+        required:true,
         trim: true
-    },
-    
-    name:{
-        type: String,
-        require:true,
-        trim: true
-    }
-    
+    }  
   })
 
   module.exports = Post

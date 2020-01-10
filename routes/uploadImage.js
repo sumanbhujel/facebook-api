@@ -29,7 +29,7 @@ var upload= multer({
 const router = new express.Router();
 //upload image
 router.post('/upload', upload.single('image'),(req,res)=>{
-    res.json(req.file);
+    res.json(req.file.filename);
 });
 
 module.exports = upload;
