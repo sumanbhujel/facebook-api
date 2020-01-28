@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const auth = require('../middleware/auth');
+
 const router = new express.Router();
 
 //for signup to insert data 
@@ -22,8 +23,36 @@ router.get('/users', (req, res) => {
     });
 });
 
+router.get('/users/singleuser/:id', (req, res) => {
+    User.findOne({ _id: req.params.id }).then(function (user_data) {
+        res.send(user_data);
+    }).catch(function (er) {
+        res.send(er);
+    });
+});
+
+router.put('/updateteacher/:id', function (req, res) {
+    User.findByIdAndUpdate(req.params.id, req.body).then(function () {
+        res.send('Teacher Update Successfully ');
+    }).catch(function (er) {
+        res.send(er);
+    });
+})
+
+router.delete('/deleteuser/:id', function (req, res) {
+    User.findByIdAndDelete(req.params.id).then(function () {
+        res.send('deleted');
+
+    }).catch(function (e) {
+        res.send(e);
+    });
+});
+
+
+
 //for login
 router.post('/login', async (req, res) => {
+    //console.log(req,res)
     try {
         const user = await User.checkCrediantialsDb(req.body.email_phone, req.body.password);
         const token = await user.generateAuthToken();
